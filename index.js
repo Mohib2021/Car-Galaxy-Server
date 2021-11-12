@@ -36,6 +36,19 @@ const run = async () => {
 			const result = await userCollection.insertOne(user);
 			res.json(result);
 		});
+		// UPDATE USER ROLE
+		app.put("/users", async (req, res) => {
+			const body = req.body;
+			const query = { email: body.email };
+			const option = { upsert: true };
+			const updateDoc = {
+				$set: {
+					role: body.role,
+				},
+			};
+			const result = await userCollection.updateOne(query, updateDoc, option);
+			res.json(result);
+		});
 		app.get("/cars", async (req, res) => {
 			const cursor = carCollection.find({});
 			const result = await cursor.toArray();
@@ -87,6 +100,7 @@ const run = async () => {
 			const result = orderedCollection.deleteOne(query);
 			res.json(result);
 		});
+		// UPDATE STATUS
 		app.put("/ordered/:id", async (req, res) => {
 			const id = req.params.id;
 			const body = req.body;
