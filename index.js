@@ -74,6 +74,23 @@ const run = async () => {
 			const result = orderedCollection.deleteOne(query);
 			res.json(result);
 		});
+		app.put("/ordered/:id", async (req, res) => {
+			const id = req.params.id;
+			const body = req.body;
+			const query = { _id: ObjectId(id) };
+			const option = { upsert: true };
+			const updateDoc = {
+				$set: {
+					status: body.status,
+				},
+			};
+			const result = await orderedCollection.updateOne(
+				query,
+				updateDoc,
+				option
+			);
+			res.json(result);
+		});
 	} finally {
 		//something
 		// app.close();
