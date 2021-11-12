@@ -54,6 +54,13 @@ const run = async () => {
 			const result = await carCollection.findOne(query);
 			res.send(result);
 		});
+		//DELETE API
+		app.delete("/ordered/:id", async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = orderedCollection.deleteOne(query);
+			res.json(result);
+		});
 	} finally {
 		//something
 		// app.close();
