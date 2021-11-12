@@ -23,6 +23,19 @@ const run = async () => {
 		const database = client.db("car-show");
 		const carCollection = database.collection("cars");
 		const orderedCollection = database.collection("ordered");
+		const userCollection = database.collection("users");
+		// GET USER API
+		app.get("/users", async (req, res) => {
+			const cursor = userCollection.find({});
+			const result = await cursor.toArray();
+			res.send(result);
+		});
+		// POST USER API
+		app.post("/users", async (req, res) => {
+			const user = req.body;
+			const result = await userCollection.insertOne(user);
+			res.json(result);
+		});
 		app.get("/cars", async (req, res) => {
 			const cursor = carCollection.find({});
 			const result = await cursor.toArray();
