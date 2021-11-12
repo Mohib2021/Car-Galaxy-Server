@@ -24,6 +24,19 @@ const run = async () => {
 		const carCollection = database.collection("cars");
 		const orderedCollection = database.collection("ordered");
 		const userCollection = database.collection("users");
+		const reviewCollection = database.collection("reviews");
+		// GET REVIEW
+		app.get("/review", async (req, res) => {
+			const cursor = reviewCollection.find({});
+			const result = await cursor.toArray();
+			res.send(result);
+		});
+		// POST REVIEW
+		app.post("/review", async (req, res) => {
+			const review = req.body;
+			const result = reviewCollection.insertOne(review);
+			res.json(result);
+		});
 		// GET USER API
 		app.get("/users", async (req, res) => {
 			const cursor = userCollection.find({});
